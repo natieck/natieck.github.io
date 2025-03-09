@@ -8,6 +8,7 @@
   </head>
   <body>
     <h1>Digital Level</h1>
+    <button id="sensor_button" onclick="sensor_click(this);">start</button>
     <p>Euler angles</p>
     <p>
       alpha:<span id="alpha_angle"></span><br />
@@ -22,38 +23,49 @@
     </p>
     <script>
       let iosflg = 0;
-      if(DeviceOrientationEvent && typeof DeviceOrientationEvent.requestPermission === 'function'){
-        // for iOS 13 or later
-        // Get permission
-        DeviceOrientationEvent.requestPermission().then(permissionState => {
-          if (permissionState === 'granted') {
-            // Add devicemotion to event listeners if permission is granted
+      let sensorflg = 0;
+      function sensor_click(button){
+        sensorflag = 1-sensorflag;
+        if(sensorflag){
+          button.innerHTML = "stop";
+          if(DeviceOrientationEvent && typeof DeviceOrientationEvent.requestPermission === 'function'){
+            // for iOS 13 or later
+            // Get permission
+            DeviceOrientationEvent.requestPermission().then(permissionState => {
+              if (permissionState === 'granted') {
+                // Add devicemotion to event listeners if permission is granted
+                window.addEventListener("deviceorientation",ori_sensor,false);
+              }else{
+                // Processing if a permit is not granted
+                alert('DeviceOrientationEvent is not permitted.');
+              }
+            }).catch(console.error) // Case that permission could not be obtained due to non-https communication, etc
+          }else{
+            // Browsers other than the above
             window.addEventListener("deviceorientation",ori_sensor,false);
-          }else{
-            // Processing if a permit is not granted
-            alert('DeviceOrientationEvent is not permitted.');
           }
-        }).catch(console.error) // Case that permission could not be obtained due to non-https communication, etc
-      }else{
-        // Browsers other than the above
-        window.addEventListener("deviceorientation",ori_sensor,false);
-      }
-      if(DeviceMotionEvent && typeof DeviceMotionEvent.requestPermission === 'function'){
-        // for iOS 13 or later
-        // Get permission
-        DeviceMotionEvent.requestPermission().then(permissionState => {
-          if (permissionState === 'granted') {
-            // Add devicemotion to event listeners if permission is granted
-            iosflg = 1;
+          if(DeviceMotionEvent && typeof DeviceMotionEvent.requestPermission === 'function'){
+            // for iOS 13 or later
+            // Get permission
+            DeviceMotionEvent.requestPermission().then(permissionState => {
+              if (permissionState === 'granted') {
+                // Add devicemotion to event listeners if permission is granted
+                iosflg = 1;
+                window.addEventListener("devicemotion",acc_sensor,false);
+              }else{
+                // Processing if a permit is not granted
+                alert('DeviceMotionEvent is not permitted.');
+              }
+            }).catch(console.error) // Case that permission could not be obtained due to non-https communication, etc
+          }else{
+            // Browsers other than the above
             window.addEventListener("devicemotion",acc_sensor,false);
-          }else{
-            // Processing if a permit is not granted
-            alert('DeviceMotionEvent is not permitted.');
           }
-        }).catch(console.error) // Case that permission could not be obtained due to non-https communication, etc
-      }else{
-        // Browsers other than the above
-        window.addEventListener("devicemotion",acc_sensor,false);
+        }else{
+          button.innerHTML = "start";
+          window.removeEventListener("deviceorientation",ori_sensor,false);
+          window.removeEventListener("devicemotion",acc_sensor,false);
+        }
       }
       function ori_sensor(ev){
         ar = (ev.alpha || 0)*Math.PI/180;
