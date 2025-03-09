@@ -21,6 +21,7 @@
       az:<span id="acc_z"></span>
     </p>
     <script>
+      let iosflg = 0;
       if(DeviceOrientationEvent && typeof DeviceOrientationEvent.requestPermission === 'function'){
         // for iOS 13 or later
         // Get permission
