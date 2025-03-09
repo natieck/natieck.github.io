@@ -8,5 +8,71 @@
   </head>
   <body>
     <h1>Digital Level</h1>
+    <p>Euler angles</p>
+    <p>
+      alpha:<span id="alpha_angle"></span><br />
+      beta :<span id="beta_angle"></span><br />
+      gamma:<span id="gamma_angle"></span>
+    </p>
+    <p>Acceleration including Gravity</p>
+    <p>
+      ax:<span id="acc_x"></span><br />
+      ay:<span id="acc_y"></span><br />
+      az:<span id="acc_z"></span><
+    </p>
+    <script>
+      if(DeviceOrientationEvent && typeof DeviceOrientationEvent.requestPermission === 'function'){
+        // for iOS 13 or later
+        // Get permission
+        DeviceOrientationEvent.requestPermission().then(permissionState => {
+          if (permissionState === 'granted') {
+            // Add devicemotion to event listeners if permission is granted
+            window.addEventListener("deviceorientation",ori_sensor,false);
+          }else{
+            // Processing if a permit is not granted
+            alert('DeviceOrientationEvent is not permitted.');
+          }
+        }).catch(console.error) // Case that permission could not be obtained due to non-https communication, etc
+      }else{
+        // Browsers other than the above
+        window.addEventListener("deviceorientation",ori_sensor,false);
+      }
+      if(DeviceMotionEvent && typeof DeviceMotionEvent.requestPermission === 'function'){
+        // for iOS 13 or later
+        // Get permission
+        DeviceMotionEvent.requestPermission().then(permissionState => {
+          if (permissionState === 'granted') {
+            // Add devicemotion to event listeners if permission is granted
+            iosflg = 1;
+            window.addEventListener("devicemotion",acc_sensor,false);
+          }else{
+            // Processing if a permit is not granted
+            alert('DeviceMotionEvent is not permitted.');
+          }
+        }).catch(console.error) // Case that permission could not be obtained due to non-https communication, etc
+      }else{
+        // Browsers other than the above
+        window.addEventListener("devicemotion",acc_sensor,false);
+      }
+      function ori_sensor(ev){
+        ar = (ev.alpha || 0)*Math.PI/180;
+        br = (ev.beta || 0)*Math.PI/180;
+        gr = (ev.gamma || 0)*Math.PI/180;
+        
+      }
+      function acc_sensor(ev){
+        let acc=ev.accelerationIncludingGravity;
+        if(iosflg){
+          // Reverse the sign for iOS
+          ax = -acc.x || 0;
+          ay = -acc.y || 0;
+          az = -acc.z || 0;
+        }else{
+          ax = acc.x || 0;
+          ay = acc.y || 0;
+          az = acc.z || 0;
+        }
+      }
+    </script>
   </body>
 </html>
