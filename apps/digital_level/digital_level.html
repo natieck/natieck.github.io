@@ -58,7 +58,9 @@
         ar = (ev.alpha || 0)*Math.PI/180;
         br = (ev.beta || 0)*Math.PI/180;
         gr = (ev.gamma || 0)*Math.PI/180;
-        
+        document.getElementById('alpha_angle').innerHTML=ar.toFixed(3);
+        document.getElementById('beta_angle').innerHTML=br.toFixed(3);
+        document.getElementById('gamma_angle').innerHTML=gr.toFixed(3);
       }
       function acc_sensor(ev){
         let acc=ev.accelerationIncludingGravity;
