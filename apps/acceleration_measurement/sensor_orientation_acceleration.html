@@ -375,9 +375,9 @@ function sensor_start(button){
     [awx,awy,awz] = transform_acc(ax,ay,az,ar,br,gr);
     if(t >= lasttime+cdt){
       ori_chart.update(ar,br,gr);
-      document.getElementById('angle_alpha').innerHTML = (ar*180/Math.PI).ToFixed(3);
-      document.getElementById('angle_beta').innerHTML = (br*180/Math.PI).ToFixed(3);
-      document.getElementById('angle_gamma').innerHTML = (gr*180/Math.PI).ToFixed(3);
+      document.getElementById('angle_alpha').innerHTML = (ar*180/Math.PI).toFixed(3);
+      document.getElementById('angle_beta').innerHTML = (br*180/Math.PI).toFixed(3);
+      document.getElementById('angle_gamma').innerHTML = (gr*180/Math.PI).toFixed(3);
       ac1_chart.update(ax,ay,az);
       ac2_chart.update(awx,awy,awz);
       lasttime = t;
