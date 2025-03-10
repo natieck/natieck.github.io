@@ -20,7 +20,8 @@
     <p>
       ax:<span id="acc_x"></span><br />
       ay:<span id="acc_y"></span><br />
-      az:<span id="acc_z"></span>
+      az:<span id="acc_z"></span><br />
+      angle:<span id="angle_from_horizontal"></span>
     </p>
     <script>
       let iosflg = 0;
@@ -69,9 +70,9 @@
         }
       }
       function ori_sensor(ev){
-        ar = (ev.alpha || 0);//*Math.PI/180;
-        br = (ev.beta || 0);//*Math.PI/180;
-        gr = (ev.gamma || 0);//*Math.PI/180;
+        ar = ev.alpha || 0;
+        br = ev.beta || 0;
+        gr = ev.gamma || 0;
         document.getElementById('angle_absolute').innerHTML=ev.absolute;
         document.getElementById('alpha_angle').innerHTML=ar.toFixed(3);
         document.getElementById('beta_angle').innerHTML=br.toFixed(3);
@@ -92,6 +93,8 @@
         document.getElementById('acc_x').innerHTML=ax.toFixed(3);
         document.getElementById('acc_y').innerHTML=ay.toFixed(3);
         document.getElementById('acc_z').innerHTML=az.toFixed(3);
+        let theta = Math.acos(az/Math.sqrt(ax*ax+ay*ay+az*az))*180/Math.PI;
+        document.getElementById('angle_from_horizontal').innerHTML=theta.toFixed(3);
       }
     </script>
   </body>
