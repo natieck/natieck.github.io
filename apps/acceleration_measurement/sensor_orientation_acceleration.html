@@ -157,7 +157,8 @@ ori_chart.beta = createChart(clr[1]);
 ori_chart.gamma = createChart(clr[2]);
 
 item = document.createElement("span");
-item.textContent = '\u00a0$\\alpha$ $\\small [0,360]$:';
+//item.textContent = '\u00a0$\\alpha$ $\\small [0,360]$:';
+item.innerHTML = '\u00a0$\\alpha$ $\\small [0,360]$:';
 item.style.color = clr[0];
 div_ori.appendChild(item);
 div_ori.appendChild(document.createElement("br"));
