@@ -205,7 +205,8 @@ ac1_chart.ay = createChart(clr[1]);
 ac1_chart.az = createChart(clr[2]);
 
 item = document.createElement("span");
-item.textContent = '\u00a0$a_x$:';
+//item.textContent = '\u00a0$a_x$:';
+item.innerHTML = '\u00a0$a_x$:\u00a0<span id="acc_x"></span>';
 item.style.color = clr[0];
 div_ac1.appendChild(item);
 div_ac1.appendChild(document.createElement("br"));
@@ -213,7 +214,8 @@ div_ac1.appendChild(ac1_chart.ax);
 div_ac1.appendChild(document.createElement("br"));
 
 item = document.createElement("span");
-item.textContent = '\u00a0$a_y$:';
+//item.textContent = '\u00a0$a_y$:';
+item.innerHTML = '\u00a0$a_y$:\u00a0<span id="acc_y"></span>';
 item.style.color = clr[1];
 div_ac1.appendChild(item);
 div_ac1.appendChild(document.createElement("br"));
@@ -221,7 +223,8 @@ div_ac1.appendChild(ac1_chart.ay);
 div_ac1.appendChild(document.createElement("br"));
 
 item=document.createElement("span");
-item.textContent = '\u00a0$a_z$:';
+//item.textContent = '\u00a0$a_z$:';
+item.innerHTML = '\u00a0$a_z$:\u00a0<span id="acc_z"></span>';
 item.style.color = clr[2];
 div_ac1.appendChild(item);
 div_ac1.appendChild(document.createElement("br"));
@@ -250,7 +253,8 @@ ac2_chart.ay = createChart(clr[1]);
 ac2_chart.az = createChart(clr[2]);
 
 item = document.createElement("span");
-item.textContent = '\u00a0$a_x$:';
+//item.textContent = '\u00a0$a_x$:';
+item.innerHTML = '\u00a0$a_x$:\u00a0<span id="acc_wx"></span>';
 item.style.color = clr[0];
 div_ac2.appendChild(item);
 div_ac2.appendChild(document.createElement("br"));
@@ -258,7 +262,8 @@ div_ac2.appendChild(ac2_chart.ax);
 div_ac2.appendChild(document.createElement("br"));
 
 item = document.createElement("span");
-item.textContent = '\u00a0$a_y$:';
+//item.textContent = '\u00a0$a_y$:';
+item.innerHTML = '\u00a0$a_y$:\u00a0<span id="acc_wy"></span>';
 item.style.color = clr[1];
 div_ac2.appendChild(item);
 div_ac2.appendChild(document.createElement("br"));
@@ -266,7 +271,8 @@ div_ac2.appendChild(ac2_chart.ay);
 div_ac2.appendChild(document.createElement("br"));
 
 item = document.createElement("span");
-item.textContent = '\u00a0$a_z$:';
+//item.textContent = '\u00a0$a_z$:';
+item.innerHTML = '\u00a0$a_z$:\u00a0<span id="acc_wz"></span>';
 item.style.color = clr[2];
 div_ac2.appendChild(item);
 div_ac2.appendChild(document.createElement("br"));
@@ -379,7 +385,13 @@ function sensor_start(button){
       document.getElementById('angle_beta').innerHTML = (br*180/Math.PI).toFixed(3);
       document.getElementById('angle_gamma').innerHTML = (gr*180/Math.PI).toFixed(3);
       ac1_chart.update(ax,ay,az);
+      document.getElementById('acc_x').innerHTML = ax.toFixed(3);
+      document.getElementById('acc_y').innerHTML = ay.toFixed(3);
+      document.getElementById('acc_z').innerHTML = az.toFixed(3);
       ac2_chart.update(awx,awy,awz);
+      document.getElementById('acc_wx').innerHTML = awx.toFixed(3);
+      document.getElementById('acc_wy').innerHTML = awy.toFixed(3);
+      document.getElementById('acc_wz').innerHTML = awz.toFixed(3);
       lasttime = t;
     }
     if(!measureflag)return;
