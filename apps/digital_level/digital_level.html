@@ -95,7 +95,7 @@
         document.getElementById('acc_z').innerHTML=az.toFixed(3);
         let theta = Math.acos(az/Math.sqrt(ax*ax+ay*ay+az*az))*180/Math.PI;
         let theta_sign;
-        if(Math.abs(br) < Math.abs(gr))theta_sign = Math.sign(gr);
+        if(Math.abs(br) < Math.abs(gr))theta_sign = -Math.sign(gr);
         else theta_sign = Math.sign(br);
         if(theta_sign!=0)theta*=theta_sign;
         document.getElementById('angle_from_horizontal').innerHTML=theta.toFixed(3);
