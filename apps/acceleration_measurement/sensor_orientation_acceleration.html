@@ -158,7 +158,7 @@ ori_chart.gamma = createChart(clr[2]);
 
 item = document.createElement("span");
 //item.textContent = '\u00a0$\\alpha$ $\\small [0,360]$:';
-item.innerHTML = '\u00a0$\\alpha$ $\\small [0,360]$:';
+item.innerHTML = '\u00a0$\\alpha$ $\\small [0,360]$:\u00a0<span id="angle_alpha"></span>';
 item.style.color = clr[0];
 div_ori.appendChild(item);
 div_ori.appendChild(document.createElement("br"));
@@ -373,6 +373,7 @@ function sensor_start(button){
     [awx,awy,awz] = transform_acc(ax,ay,az,ar,br,gr);
     if(t >= lasttime+cdt){
       ori_chart.update(ar,br,gr);
+      document.getElementById('angle_alpha').innerHTML = ar*180/Math.PI;
       ac1_chart.update(ax,ay,az);
       ac2_chart.update(awx,awy,awz);
       lasttime = t;
