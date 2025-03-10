@@ -166,7 +166,8 @@ div_ori.appendChild(ori_chart.alpha);
 div_ori.appendChild(document.createElement("br"));
 
 item = document.createElement("span");
-item.textContent = '\u00a0$\\beta$ $\\small [-180,180]$:';
+//item.textContent = '\u00a0$\\beta$ $\\small [-180,180]$:';
+item.innerHTML = '\u00a0$\\beta$ $\\small [-180,180]$:\u00a0<span id="angle_beta"></span>';
 item.style.color = clr[1];
 div_ori.appendChild(item);
 div_ori.appendChild(document.createElement("br"));
@@ -174,7 +175,8 @@ div_ori.appendChild(ori_chart.beta);
 div_ori.appendChild(document.createElement("br"));
 
 item=document.createElement("span");
-item.textContent='\u00a0$\\gamma$ $\\small [-90,90]$:';
+//item.textContent = '\u00a0$\\gamma$ $\\small [-90,90]$:';
+item.innerHTML = '\u00a0$\\gamma$ $\\small [-90,90]$:\u00a0<span id="angle_gamma"></span>';
 item.style.color = clr[2];
 div_ori.appendChild(item);
 div_ori.appendChild(document.createElement("br"));
@@ -373,7 +375,9 @@ function sensor_start(button){
     [awx,awy,awz] = transform_acc(ax,ay,az,ar,br,gr);
     if(t >= lasttime+cdt){
       ori_chart.update(ar,br,gr);
-      document.getElementById('angle_alpha').innerHTML = ar*180/Math.PI;
+      document.getElementById('angle_alpha').innerHTML = (ar*180/Math.PI).ToFixed(3);
+      document.getElementById('angle_beta').innerHTML = (br*180/Math.PI).ToFixed(3);
+      document.getElementById('angle_gamma').innerHTML = (gr*180/Math.PI).ToFixed(3);
       ac1_chart.update(ax,ay,az);
       ac2_chart.update(awx,awy,awz);
       lasttime = t;
