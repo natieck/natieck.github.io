@@ -9,7 +9,7 @@
   <body>
     <h1>Digital Level</h1>
     <button id="sensor_button" onclick="sensor_click(this);">start</button>
-    <div><canvas id="level_canvas" width="500" height="500"></canvas></div>
+    <div><canvas id="level_canvas" width="400" height="400"></canvas></div>
     <p>Euler angles</p>
     <p>
       absolute:<span id="angle_absolute"></span><br />
@@ -25,9 +25,13 @@
       angle:<span id="angle_from_horizontal"></span>
     </p>
     <script>
-      let ar,br,gr,ax,ay,az;
-      let iosflg = 0;
-      let sensorflg = 0;
+      let ar, br, gr, ax, ay, az;
+      let oriflg, iosflg = 0, sensorflg = 0;
+      let cnt, ncnt = 20;
+      const canvas = document.getElementById('level_canvas');
+      let cx = canvas.width/2, cy = canvas.height/2;
+      let ctx = canvas.getContext('2d');
+      
       function sensor_click(button){
         sensorflg = 1-sensorflg;
         if(sensorflg){
@@ -71,36 +75,53 @@
           window.removeEventListener("devicemotion",acc_sensor,false);
         }
       }
+      
       function ori_sensor(ev){
+        oriflg = ev.absolute;
         ar = ev.alpha || 0;
         br = ev.beta || 0;
         gr = ev.gamma || 0;
-        document.getElementById('angle_absolute').innerHTML=ev.absolute;
-        document.getElementById('alpha_angle').innerHTML=ar.toFixed(3);
-        document.getElementById('beta_angle').innerHTML=br.toFixed(3);
-        document.getElementById('gamma_angle').innerHTML=gr.toFixed(3);
       }
+      
       function acc_sensor(ev){
-        let acc=ev.accelerationIncludingGravity;
-        if(iosflg){
-          // Reverse the sign for iOS
-          ax = -acc.x || 0;
-          ay = -acc.y || 0;
-          az = -acc.z || 0;
-        }else{
-          ax = acc.x || 0;
-          ay = acc.y || 0;
-          az = acc.z || 0;
+        if(cnt++>ncnt){
+          cnt = 0;
+          const acc=ev.accelerationIncludingGravity;
+          if(iosflg){
+            // Reverse the sign for iOS
+            ax = -acc.x || 0;
+            ay = -acc.y || 0;
+            az = -acc.z || 0;
+          }else{
+            ax = acc.x || 0;
+            ay = acc.y || 0;
+            az = acc.z || 0;
+          }
+          document.getElementById('angle_absolute').innerHTML=oriflg;
+          document.getElementById('alpha_angle').innerHTML=ar.toFixed(3);
+          document.getElementById('beta_angle').innerHTML=br.toFixed(3);
+          document.getElementById('gamma_angle').innerHTML=gr.toFixed(3);
+          document.getElementById('acc_x').innerHTML=ax.toFixed(3);
+          document.getElementById('acc_y').innerHTML=ay.toFixed(3);
+          document.getElementById('acc_z').innerHTML=az.toFixed(3);
+          let theta = Math.acos(az/Math.sqrt(ax*ax+ay*ay+az*az))*180/Math.PI;
+          let theta_sign;
+          if(Math.abs(br) < Math.abs(gr))theta_sign = -Math.sign(gr);
+          else theta_sign = Math.sign(br);
+          if(theta_sign!=0)theta*=theta_sign;
+          document.getElementById('angle_from_horizontal').innerHTML=theta.toFixed(3);
+
+          let x = gr/45, y = br/45;
+          if(x<-1)x=-1;else if(x>1)x=1;
+          if(y<-1)y=-1;else if(y>1)y=1;
+          x = x*cx+cx;
+          y = y*cy+cy;
+          ctx.clearRect(0,0,canvas.width,canvas.height);
+          ctx.strokeStyle = 'black';
+          ctx.beginPath();
+          ctx.arc(x, y, 20, 0, Math.PI*2);
+			    ctx.stroke();
         }
-        document.getElementById('acc_x').innerHTML=ax.toFixed(3);
-        document.getElementById('acc_y').innerHTML=ay.toFixed(3);
-        document.getElementById('acc_z').innerHTML=az.toFixed(3);
-        let theta = Math.acos(az/Math.sqrt(ax*ax+ay*ay+az*az))*180/Math.PI;
-        let theta_sign;
-        if(Math.abs(br) < Math.abs(gr))theta_sign = -Math.sign(gr);
-        else theta_sign = Math.sign(br);
-        if(theta_sign!=0)theta*=theta_sign;
-        document.getElementById('angle_from_horizontal').innerHTML=theta.toFixed(3);
       }
     </script>
   </body>
