@@ -9,6 +9,7 @@
   <body>
     <h1>Digital Level</h1>
     <button id="sensor_button" onclick="sensor_click(this);">start</button>
+    &nbsp;&nbsp;<span id="counter"></span>
     <div><canvas id="level_canvas" width="400" height="400"></canvas></div>
     <p>Euler angles</p>
     <p>
@@ -27,7 +28,7 @@
     <script>
       let ar, br, gr, ax, ay, az;
       let oriflg, iosflg = 0, sensorflg = 0;
-      let cnt, ncnt = 20;
+      let cnt = 0, ncnt = 20;
       const canvas = document.getElementById('level_canvas');
       let cx = canvas.width/2, cy = canvas.height/2;
       let ctx = canvas.getContext('2d');
@@ -84,7 +85,8 @@
       }
       
       function acc_sensor(ev){
-        if(cnt++>ncnt){
+	document.getElementById('counter').innerHTML=cnt;
+        if(++cnt > ncnt){
           cnt = 0;
           const acc=ev.accelerationIncludingGravity;
           if(iosflg){
