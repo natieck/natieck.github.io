@@ -9,6 +9,7 @@
   <body>
     <h1>Digital Level</h1>
     <button id="sensor_button" onclick="sensor_click(this);">start</button>
+    <div><canvas id="level_canvas" width="500" height="500"></canvas></div>
     <p>Euler angles</p>
     <p>
       absolute:<span id="angle_absolute"></span><br />
@@ -24,6 +25,7 @@
       angle:<span id="angle_from_horizontal"></span>
     </p>
     <script>
+      let ar,br,gr,ax,ay,az;
       let iosflg = 0;
       let sensorflg = 0;
       function sensor_click(button){
