@@ -28,7 +28,7 @@
     <script>
       let ar, br, gr, ax, ay, az;
       let oriflg, iosflg = 0, sensorflg = 0;
-      let cnt = 0, ncnt = 20;
+      let cnt = 0, ncnt = 10;
       const canvas = document.getElementById('level_canvas');
       let cx = canvas.width/2, cy = canvas.height/2;
       let ctx = canvas.getContext('2d');
@@ -113,7 +113,7 @@
           if(theta_sign!=0)theta*=theta_sign;
           document.getElementById('angle_from_horizontal').innerHTML=theta.toFixed(3);
 
-          let x = gr/45, y = br/45;
+          let x = -gr/45, y = -br/45;
           if(x<-1)x=-1;else if(x>1)x=1;
           if(y<-1)y=-1;else if(y>1)y=1;
           x = x*cx+cx;
