@@ -31,7 +31,7 @@
       let ctx = canvas.getContext('2d');
 
       if(Math.abs(screen.orientation)==90)rotflg = 1;else rotflg = 0;
-      window.addEventListener("orientationchange", function(){
+      screen.addEventListener("orientationchange", function(){
         if(Math.abs(screen.orientation)==90)rotflg = 1;else rotflg = 0;
       });
 			      
