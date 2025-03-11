@@ -33,7 +33,7 @@
       if(window.innerWidth < window.innerHeight)rotflg = 0;else rotflg = 1;
       window.addEventListener("orientationchange resize", function(){
         rotflg = 1-rotflg;
-      }
+      });
 			      
       function sensor_click(button){
         sensorflg = 1-sensorflg;
