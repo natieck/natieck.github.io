@@ -11,28 +11,30 @@
     <button id="sensor_button" onclick="sensor_click(this);">start</button>
     &nbsp;&nbsp;<span id="counter"></span>
     <div><canvas id="level_canvas" width="400" height="400"></canvas></div>
-    <p>Euler angles</p>
-    <p>
-      absolute:<span id="angle_absolute"></span><br />
-      alpha:<span id="alpha_angle"></span><br />
-      beta :<span id="beta_angle"></span><br />
-      gamma:<span id="gamma_angle"></span>
-    </p>
-    <p>Acceleration including Gravity</p>
-    <p>
-      ax:<span id="acc_x"></span><br />
-      ay:<span id="acc_y"></span><br />
-      az:<span id="acc_z"></span><br />
+    <p>Euler angles (absolute:<span id="angle_absolute"></span>)<br />
+      alpha:<span id="alpha_angle"></span>,&nbsp;&nbsp;
+      beta :<span id="beta_angle"></span>,&nbsp;&nbsp;
+      gamma:<span id="gamma_angle"></span><br />
       angle:<span id="angle_from_horizontal"></span>
+    </p>
+    <p>Acceleration including Gravity<br />
+      ax:<span id="acc_x"></span>,&nbsp;&nbsp;
+      ay:<span id="acc_y"></span>,&nbsp;&nbsp;
+      az:<span id="acc_z"></span>
     </p>
     <script>
       let ar, br, gr, ax, ay, az;
-      let oriflg, iosflg = 0, sensorflg = 0;
+      let oriflg, rotflg, iosflg = 0, sensorflg = 0;
       let cnt = 0, ncnt = 10;
       const canvas = document.getElementById('level_canvas');
       let cx = canvas.width/2, cy = canvas.height/2;
       let ctx = canvas.getContext('2d');
-      
+
+      if(window.innerWidth < window.innerHeight)rotflg = 0;else rotflg = 1;
+      window.addEventListener("orientationchange resize", function(){
+        rotflg = 1-rotflg;
+      }
+			      
       function sensor_click(button){
         sensorflg = 1-sensorflg;
         if(sensorflg){
@@ -113,16 +115,48 @@
           if(theta_sign!=0)theta*=theta_sign;
           document.getElementById('angle_from_horizontal').innerHTML=theta.toFixed(3);
 
-          let x = -gr/45, y = -br/45;
-          if(x<-1)x=-1;else if(x>1)x=1;
-          if(y<-1)y=-1;else if(y>1)y=1;
-          x = x*cx+cx;
-          y = y*cy+cy;
+          let w, x, y, x0, y0, x1, y1;
+	  x= cx*(gr>90 ? gr-180 : -gr)/45;
+	  y = -cy*br/45;
+          if(x>cx){w=x/cx;x=cx;y*=w;}else if(x<-cx){w=-x/cx;x=-cx;y*=w;}
+	  if(y>cy){w=y/cy;x*=w;y=cy;}else if(y<-cy){w=-y/cy;x*=w;y=-cy;}
+          let grd = y/x;
+	  if(grd < cy/cx){
+	    x0 = 0;
+	    x1 = canvas.width;
+	    y0 = -cx*grd+cy;
+	    y1 = cx*grd+cy;
+	  }else{
+	    x0 = -cy/grd+cx;
+	    x1 = cy/grd+cx;
+	    y0 = 0;
+	    y1 = canvas.width;
+	  }
+	  x+=cx;
+	  y+=cy;
+	  if(rotflg){
+	    w=x;x=y;y=w;
+	    w=x0;x0=y0;y0=w;
+	    w=x1;x1=y1;y1=w;
+	  }
+	  
           ctx.clearRect(0,0,canvas.width,canvas.height);
+
+	  ctx.strokeStyle = 'blue';
+	  ctx.beginPath();
+	  ctx.moveTo(x0,y0);
+	  ctx.lineTo(x1,y1);
+	  ctx.stroke();
+
           ctx.strokeStyle = 'black';
           ctx.beginPath();
           ctx.arc(x, y, 20, 0, Math.PI*2);
-			    ctx.stroke();
+	  ctx.stroke();
+		
+	  ctx.fillStyle = 'red';
+          ctx.beginPath();
+          ctx.arc(0, 0, 5, 0, Math.PI*2);
+	  ctx.fill();
         }
       }
     </script>
