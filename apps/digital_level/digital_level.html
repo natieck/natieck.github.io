@@ -24,16 +24,11 @@
     </p>
     <script>
       let ar, br, gr, ax, ay, az;
-      let oriflg, rotflg, iosflg = 0, sensorflg = 0;
+      let oriflg, iosflg = 0, sensorflg = 0;
       let cnt = 0, ncnt = 10;
       const canvas = document.getElementById('level_canvas');
       let cx = canvas.width/2, cy = canvas.height/2;
       let ctx = canvas.getContext('2d');
-
-      if(Math.abs(screen.orientation)==90)rotflg = 1;else rotflg = 0;
-      screen.addEventListener("orientationchange", function(){
-        if(Math.abs(screen.orientation)==90)rotflg = 1;else rotflg = 0;
-      });
 			      
       function sensor_click(button){
         sensorflg = 1-sensorflg;
@@ -87,7 +82,7 @@
       }
       
       function acc_sensor(ev){
-	document.getElementById('counter').innerHTML=`${rotflg} : ${cnt}`;
+	document.getElementById('counter').innerHTML=`${screen.orientation.angle} : ${cnt}`;
         if(++cnt > ncnt){
           cnt = 0;
           const acc=ev.accelerationIncludingGravity;
@@ -134,7 +129,7 @@
 	  }
 	  x+=cx;
 	  y+=cy;
-	  if(rotflg){
+	  if(Math.abs(screen.orientation.angle)==90){
 	    w=x;x=y;y=w;
 	    w=x0;x0=y0;y0=w;
 	    w=x1;x1=y1;y1=w;
