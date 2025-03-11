@@ -87,7 +87,7 @@
       }
       
       function acc_sensor(ev){
-	document.getElementById('counter').innerHTML=cnt;
+	document.getElementById('counter').innerHTML=`${rotflg} : ${cnt}`;
         if(++cnt > ncnt){
           cnt = 0;
           const acc=ev.accelerationIncludingGravity;
