@@ -129,7 +129,7 @@
 	      x = cx*theta/45;
 	      y = x*grad;
 	      x0 = 0;
-	      x1 = canvas.width;
+	      x1 = cx*2;
 	      y0 = -cx*grd+cy;
 	      y1 = cx*grad+cy;
 	    }else{
@@ -138,9 +138,8 @@
 	      x0 = -cy/grd+cx;
 	      x1 = cy/grd+cx;
 	      y0 = 0;
-	      y1 = canvas.height;
+	      y1 = cy*2;
 	    }
-		  document.getElementById('debug').innerHTML=grad;
             if(x>cx){w=x/cx;x=cx;y*=w;}else if(x<-cx){w=-x/cx;x=-cx;y*=w;}
 	    if(y>cy){w=y/cy;x*=w;y=cy;}else if(y<-cy){w=-y/cy;x*=w;y=-cy;}
             x += cx;
