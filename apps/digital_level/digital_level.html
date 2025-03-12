@@ -122,8 +122,10 @@
 
           let w, x, y, x0, y0, x1, y1;
 	  let grad;
-	  if(ax!=0){
+	  if(ax){
+		  
 	    grad= ay/ax;
+	    document.getElementById('debug').innerHTML=grad;
 	    if(Math.abs(grad) < cy/cx){
 	      x = cx*theta/45;
 	      y = x*grad;
