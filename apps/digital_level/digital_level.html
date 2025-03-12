@@ -25,7 +25,7 @@
       const degtorad = Math.PI/180, radtodeg = 180/Math.PI;
       let iosflg = 0, sensorflg = 0;
       let cnt = 0, ncnt = 10;
-      let radius = 10.5;
+      let radius = 20.5;
 
       let cwidth;
       cwidth = Math.round(0.95*document.documentElement.clientWidth);
@@ -116,7 +116,7 @@
 	    }
             if(x>cx){w=cx/x;x=cx;y*=w;}else if(x<-cx){w=-cx/x;x=-cx;y*=w;}
 	    if(y>cy){w=cy/y;x*=w;y=cy;}else if(y<-cy){w=-cy/y;x*=w;y=-cy;}
-	    if(x*x+y*y>radius)flg = 1;else flg = 0;
+	    if(Math.sqrt(x*x+y*y) > radius+5)flg = 1;else flg = 0;
             x += cx;
 	    y += cy;
 	  
