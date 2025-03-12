@@ -127,13 +127,13 @@
 	    grad = ay/ax;
 	    if(Math.abs(grad) < cy/cx){
 	      x = cx*theta/45;
-	      y = x*grad;
+	      y = -x*grad;
 	      x0 = 0;
 	      x1 = cx*2;
-	      y0 = -cx*grad+cy;
-	      y1 = cx*grad+cy;
+	      y0 = cx*grad+cy;
+	      y1 = -cx*grad+cy;
 	    }else{
-	      y = cy*theta/45;
+	      y = -cy*theta/45;
 	      x = y/grad;
 	      x0 = -cy/grad+cx;
 	      x1 = cy/grad+cx;
