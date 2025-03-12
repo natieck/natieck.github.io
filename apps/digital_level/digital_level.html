@@ -146,18 +146,20 @@
 	    w=x1;x1=-(y1-cy)+cy;y1=w;
 	  }
 
-	　ctx.fillStyle = 'green';
+	　ctx.fillStyle = '#e6f64b';
           ctx.fillRect(0,0,canvas.width,canvas.height);
+
+          ctx.strokeStyle = '#a8c343';
+	  ctx.fillStyle = '#fafae6";
+          ctx.beginPath();
+          ctx.arc(x, y, 21, 0, Math.PI*2);
+	  ctx.stroke();
+	  ctx.fill();
 
 	  ctx.strokeStyle = 'blue';
 	  ctx.beginPath();
 	  ctx.moveTo(x0,y0);
 	  ctx.lineTo(x1,y1);
-	  ctx.stroke();
-
-          ctx.strokeStyle = 'black';
-          ctx.beginPath();
-          ctx.arc(x, y, 21, 0, Math.PI*2);
 	  ctx.stroke();
 		
 	  ctx.fillStyle = 'red';
