@@ -10,7 +10,7 @@
     <h1>Digital Level</h1>
     <button id="sensor_button" onclick="sensor_click(this);">start</button>
     &nbsp;&nbsp;<span id="counter"></span>
-    <div><canvas id="level_canvas" width="400" height="400"></canvas></div>
+    <div><canvas id="level_canvas"></canvas></div>
     <p>Euler angles (absolute:<span id="angle_absolute"></span>)<br />
       alpha:<span id="alpha_angle"></span>,&nbsp;&nbsp;
       beta :<span id="beta_angle"></span>,&nbsp;&nbsp;
@@ -24,12 +24,19 @@
     </p>
     <script>
       let ar, br, gr, ax, ay, az;
+      const degtorad = Math.PI/180, radtodeg = 180/Math.PI;
       let oriflg, iosflg = 0, sensorflg = 0;
       let cnt = 0, ncnt = 10;
+      let cwidth;
+      cwidth = Math.round(0.95*document.documentElement.clientWidth);
+      if(cwidth === undefined)cwidth = 301;else if(!cwidth%2)cwidth--;
+      else if(cwidth > document.documentElement.clientHeight)cwidth = document.documentElement.clientHeight;
       const canvas = document.getElementById('level_canvas');
-      let cx = canvas.width/2, cy = canvas.height/2;
+      canvas.width = cwidth;
+      canvas.height = cwidth;
+      let cx = (canvas.width-1)/2, cy = (canvas.height-1)/2;
       let ctx = canvas.getContext('2d');
-			      
+
       function sensor_click(button){
         sensorflg = 1-sensorflg;
         if(sensorflg){
@@ -103,7 +110,8 @@
           document.getElementById('acc_x').innerHTML=ax.toFixed(3);
           document.getElementById('acc_y').innerHTML=ay.toFixed(3);
           document.getElementById('acc_z').innerHTML=az.toFixed(3);
-          let theta = Math.acos(az/Math.sqrt(ax*ax+ay*ay+az*az))*180/Math.PI;
+          let theta = Math.acos(az/Math.sqrt(ax*ax+ay*ay+az*az))*radtodeg;
+	  if(theta>90)theta = 180-theta;else if(theta<-90)theta = -(180+theta);
           let theta_sign;
           if(Math.abs(br) < Math.abs(gr))theta_sign = -Math.sign(gr);
           else theta_sign = Math.sign(br);
@@ -111,24 +119,27 @@
           document.getElementById('angle_from_horizontal').innerHTML=theta.toFixed(3);
 
           let w, x, y, x0, y0, x1, y1;
-	  x= cx*(gr>90 ? gr-180 : -gr)/45;
-	  y = -cy*br/45;
-          if(x>cx){w=x/cx;x=cx;y*=w;}else if(x<-cx){w=-x/cx;x=-cx;y*=w;}
-	  if(y>cy){w=y/cy;x*=w;y=cy;}else if(y<-cy){w=-y/cy;x*=w;y=-cy;}
-          let grd = y/x;
-	  if(grd < cy/cx){
+	  let grad = ay/ax;
+	  if(Math.abs(grad) < cy/cx){
+	    x = cx*theta/45;
+	    y = x*grad;
 	    x0 = 0;
 	    x1 = canvas.width;
 	    y0 = -cx*grd+cy;
-	    y1 = cx*grd+cy;
+	    y1 = cx*grad+cy;
 	  }else{
+	    y = cy*theta/45;
+	    x = y/grad;
 	    x0 = -cy/grd+cx;
 	    x1 = cy/grd+cx;
 	    y0 = 0;
-	    y1 = canvas.width;
+	    y1 = canvas.height;
 	  }
-	  x+=cx;
+          if(x>cx){w=x/cx;x=cx;y*=w;}else if(x<-cx){w=-x/cx;x=-cx;y*=w;}
+	  if(y>cy){w=y/cy;x*=w;y=cy;}else if(y<-cy){w=-y/cy;x*=w;y=-cy;}
+          x+=cx;
 	  y+=cy;
+
 	  if(Math.abs(screen.orientation.angle)==90){
 	    w=-(x-cx)+cx;x=y;y=w;
 	    w=x0;x0=-(y0-cy)+cy;y0=w;
@@ -146,7 +157,7 @@
 
           ctx.strokeStyle = 'black';
           ctx.beginPath();
-          ctx.arc(x, y, 20, 0, Math.PI*2);
+          ctx.arc(x, y, 21, 0, Math.PI*2);
 	  ctx.stroke();
 		
 	  ctx.fillStyle = 'red';
