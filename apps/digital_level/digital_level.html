@@ -125,7 +125,6 @@
 	  if(ax){
 		  
 	    grad= ay/ax;
-	    document.getElementById('debug').innerHTML=grad;
 	    if(Math.abs(grad) < cy/cx){
 	      x = cx*theta/45;
 	      y = x*grad;
@@ -141,6 +140,7 @@
 	      y0 = 0;
 	      y1 = canvas.height;
 	    }
+		  document.getElementById('debug').innerHTML=grad;
             if(x>cx){w=x/cx;x=cx;y*=w;}else if(x<-cx){w=-x/cx;x=-cx;y*=w;}
 	    if(y>cy){w=y/cy;x*=w;y=cy;}else if(y<-cy){w=-y/cy;x*=w;y=-cy;}
             x += cx;
