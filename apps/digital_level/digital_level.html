@@ -170,12 +170,12 @@
         ctx.beginPath();
 	ctx.setLineDash([]);
         ctx.arc(x, y, 21, 0, Math.PI*2);
+	ctx.fill();
 	ctx.moveTo(x-10,y);
 	ctx.lineTo(x+10,y);
 	ctx.moveTo(x,y-10);
 	ctx.lineTo(x,y+10);
 	ctx.stroke();
-	ctx.fill();
 
 	if(x0||y0||x1||y1){
           ctx.strokeStyle = "#4444ff";
