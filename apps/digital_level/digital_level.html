@@ -10,8 +10,8 @@
     <h1>Digital Level</h1>
     <button id="sensor_button" onclick="sensor_click(this);">start</button>
     &nbsp;&nbsp;<span id="counter"></span>
-    <div style="border: 1px solid #222;">
-      <canvas id="level_canvas" style="margin:0 auto;"></canvas>
+    <div id="level_div" style="border: 1px solid #aaa;border-radius: 15px;margin: 20px 20px;overflow: hidden;">
+      <canvas id="level_canvas"></canvas>
     </div>
     <p>Euler angles (absolute:<span id="angle_absolute"></span>)<br />
       alpha:<span id="alpha_angle"></span>,&nbsp;&nbsp;
@@ -30,13 +30,18 @@
       const degtorad = Math.PI/180, radtodeg = 180/Math.PI;
       let oriflg, iosflg = 0, sensorflg = 0;
       let cnt = 0, ncnt = 10;
+
       let cwidth;
       cwidth = Math.round(0.95*document.documentElement.clientWidth);
-      if(cwidth === undefined)cwidth = 301;else if(!cwidth%2)cwidth--;
-      else if(cwidth > document.documentElement.clientHeight)cwidth = document.documentElement.clientHeight;
+      if(cwidth === undefined)cwidth = 301;else if(cwidth > document.documentElement.clientHeight)cwidth = document.documentElement.clientHeight;
+      if(!cwidth%2)cwidth--;
+
       const canvas = document.getElementById('level_canvas');
       canvas.width = cwidth;
       canvas.height = cwidth;
+      const level_div = document.getElementById('level_div');
+      level_div.style.width = `${cwidth-1}px`;
+      level_div.style.height = `${cwidth-1}px`;
       let cx = (canvas.width-1)/2, cy = (canvas.height-1)/2;
       let ctx = canvas.getContext('2d');
       level_draw(cx,cy,0,0,0,0);
