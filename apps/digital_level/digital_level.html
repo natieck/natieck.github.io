@@ -140,23 +140,23 @@
           x+=cx;
 	  y+=cy;
 
-	  if(Math.abs(screen.orientation.angle)==90){
+	  if(screen.orientation.angle == 90 || screen.orientation.angle == 270){
 	    w=-(x-cx)+cx;x=y;y=w;
 	    w=x0;x0=-(y0-cy)+cy;y0=w;
 	    w=x1;x1=-(y1-cy)+cy;y1=w;
 	  }
 
-	　ctx.fillStyle = '#e6f64b';
+	　ctx.fillStyle = "#e6f64b";
           ctx.fillRect(0,0,canvas.width,canvas.height);
 
-          ctx.strokeStyle = '#a8c343';
-	  ctx.fillStyle = '#fafae6';
+          ctx.strokeStyle = "#a8c343";
+	  ctx.fillStyle = "#fafae6";
           ctx.beginPath();
           ctx.arc(x, y, 21, 0, Math.PI*2);
 	  ctx.stroke();
 	  ctx.fill();
 
-	  ctx.strokeStyle = '#4444ff';
+	  ctx.strokeStyle = "#4444ff";
 	  ctx.beginPath();
 	　ctx.setLineDash([5, 5]);
 	  ctx.moveTo(x0,y0);
