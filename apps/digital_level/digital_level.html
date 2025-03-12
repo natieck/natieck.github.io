@@ -30,7 +30,7 @@
       let cnt = 0, ncnt = 10;
       let cwidth;
       cwidth = Math.round(0.95*document.documentElement.clientWidth);
-      if(cwidth === undefined || cwidth > 301)cwidth = 301;else if(!cwidth%2)cwidth--;
+      if(cwidth === undefined)cwidth = 301;else if(!cwidth%2)cwidth--;
       else if(cwidth > document.documentElement.clientHeight)cwidth = document.documentElement.clientHeight;
       const canvas = document.getElementById('level_canvas');
       canvas.width = cwidth;
