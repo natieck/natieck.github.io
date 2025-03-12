@@ -124,19 +124,19 @@
 	  let grad;
 	  if(ax){
 		  
-	    grad= ay/ax;
+	    grad = ay/ax;
 	    if(Math.abs(grad) < cy/cx){
 	      x = cx*theta/45;
 	      y = x*grad;
 	      x0 = 0;
 	      x1 = cx*2;
-	      y0 = -cx*grd+cy;
+	      y0 = -cx*grad+cy;
 	      y1 = cx*grad+cy;
 	    }else{
 	      y = cy*theta/45;
 	      x = y/grad;
-	      x0 = -cy/grd+cx;
-	      x1 = cy/grd+cx;
+	      x0 = -cy/grad+cx;
+	      x1 = cy/grad+cx;
 	      y0 = 0;
 	      y1 = cy*2;
 	    }
