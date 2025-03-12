@@ -25,6 +25,7 @@
       const degtorad = Math.PI/180, radtodeg = 180/Math.PI;
       let iosflg = 0, sensorflg = 0;
       let cnt = 0, ncnt = 10;
+      let radius = 10.5;
 
       let cwidth;
       cwidth = Math.round(0.95*document.documentElement.clientWidth);
@@ -94,7 +95,6 @@
           document.getElementById('angle_from_horizontal').innerHTML=theta.toFixed(3);
 
           let w, x, y, x0, y0, x1, y1, flg;
-	  let radius = 10.5;
 	  let grad;
 	  if(ax){
 		  
