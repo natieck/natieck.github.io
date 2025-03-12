@@ -140,8 +140,8 @@
 	      y0 = 0;
 	      y1 = cy*2;
 	    }
-            if(x>cx){w=x/cx;x=cx;y*=w;}else if(x<-cx){w=-x/cx;x=-cx;y*=w;}
-	    if(y>cy){w=y/cy;x*=w;y=cy;}else if(y<-cy){w=-y/cy;x*=w;y=-cy;}
+            if(x>cx){w=cx/x;x=cx;y*=w;}else if(x<-cx){w=-cx/x;x=-cx;y*=w;}
+	    if(y>cy){w=cy/y;x*=w;y=cy;}else if(y<-cy){w=-cy/y;x*=w;y=-cy;}
             x += cx;
 	    y += cy;
 	  
