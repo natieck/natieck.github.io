@@ -36,6 +36,8 @@
       canvas.height = cwidth;
       let cx = (canvas.width-1)/2, cy = (canvas.height-1)/2;
       let ctx = canvas.getContext('2d');
+      ctx.fillStyle = "#e6f64b";
+      ctx.fillRect(0,0,canvas.width-1,canvas.height-1);
 
       function sensor_click(button){
         sensorflg = 1-sensorflg;
