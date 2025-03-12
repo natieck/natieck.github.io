@@ -92,7 +92,7 @@
           if(Math.abs(ay) < Math.abs(ax))theta_sign = -Math.sign(ax);
           else theta_sign = Math.sign(ay);
           if(theta_sign!=0)theta*=theta_sign;
-          document.getElementById('angle_from_horizontal').innerHTML=theta.toFixed(3);
+          document.getElementById('angle_from_horizontal').innerHTML=`${theta.toFixed(2)}&#0176;`;
 
           let w, x, y, x0, y0, x1, y1, flg;
 	  let grad;
