@@ -10,7 +10,6 @@
     <p>Digital Level</p>
     <p>
       <button id="sensor_button" onclick="sensor_click(this);">start</button>
-      &nbsp;&nbsp;<span id="counter"></span>
       &nbsp;&nbsp;angle:<span id="angle_from_horizontal"></span>
     </p>
     <div id="level_div" style="border: 1px solid #aaa; border-radius: 10px; overflow: hidden;">
@@ -100,7 +99,6 @@
       }
       
       function acc_sensor(ev){
-	document.getElementById('counter').innerHTML=`${screen.orientation.angle} : ${cnt}`;
         if(++cnt > ncnt){
           cnt = 0;
           const acc=ev.accelerationIncludingGravity;
@@ -124,8 +122,8 @@
           let theta = Math.acos(az/Math.sqrt(ax*ax+ay*ay+az*az))*radtodeg;
 	  if(theta>90)theta = 180-theta;else if(theta<-90)theta = -(180+theta);
           let theta_sign;
-          if(Math.abs(br) < Math.abs(gr))theta_sign = -Math.sign(gr);
-          else theta_sign = Math.sign(br);
+          if(Math.abs(ay) < Math.abs(ax))theta_sign = -Math.sign(ax);
+          else theta_sign = Math.sign(ay);
           if(theta_sign!=0)theta*=theta_sign;
           document.getElementById('angle_from_horizontal').innerHTML=theta.toFixed(3);
 
