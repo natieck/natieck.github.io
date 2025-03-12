@@ -15,11 +15,6 @@
     <div id="level_div" style="border: 1px solid #aaa; border-radius: 10px; overflow: hidden;">
       <canvas id="level_canvas"></canvas>
     </div>
-    <p>Euler angles (absolute:<span id="angle_absolute"></span>)<br />
-      alpha:<span id="alpha_angle"></span>,&nbsp;&nbsp;
-      beta :<span id="beta_angle"></span>,&nbsp;&nbsp;
-      gamma:<span id="gamma_angle"></span>
-    </p>
     <p>Acceleration including Gravity<br />
       ax:<span id="acc_x"></span>,&nbsp;&nbsp;
       ay:<span id="acc_y"></span>,&nbsp;&nbsp;
@@ -27,9 +22,9 @@
     </p>
     <span id="debug"></span>
     <script>
-      let ar, br, gr, ax, ay, az;
+      let ax, ay, az;
       const degtorad = Math.PI/180, radtodeg = 180/Math.PI;
-      let oriflg, iosflg = 0, sensorflg = 0;
+      let iosflg = 0, sensorflg = 0;
       let cnt = 0, ncnt = 10;
 
       let cwidth;
@@ -45,28 +40,12 @@
       level_div.style.height = `${cwidth-1}px`;
       let cx = (canvas.width-1)/2, cy = (canvas.height-1)/2;
       let ctx = canvas.getContext('2d');
-      level_draw(cx,cy,0,0,0,0);
+      level_draw(cx,cy,0,0,0,0,0);
 
       function sensor_click(button){
         sensorflg = 1-sensorflg;
         if(sensorflg){
           button.innerHTML = "stop";
-          if(DeviceOrientationEvent && typeof DeviceOrientationEvent.requestPermission === 'function'){
-            // for iOS 13 or later
-            // Get permission
-            DeviceOrientationEvent.requestPermission().then(permissionState => {
-              if (permissionState === 'granted') {
-                // Add devicemotion to event listeners if permission is granted
-                window.addEventListener("deviceorientation",ori_sensor,false);
-              }else{
-                // Processing if a permit is not granted
-                alert('DeviceOrientationEvent is not permitted.');
-              }
-            }).catch(console.error) // Case that permission could not be obtained due to non-https communication, etc
-          }else{
-            // Browsers other than the above
-            window.addEventListener("deviceorientation",ori_sensor,false);
-          }
           if(DeviceMotionEvent && typeof DeviceMotionEvent.requestPermission === 'function'){
             // for iOS 13 or later
             // Get permission
@@ -86,16 +65,8 @@
           }
         }else{
           button.innerHTML = "start";
-          window.removeEventListener("deviceorientation",ori_sensor,false);
           window.removeEventListener("devicemotion",acc_sensor,false);
         }
-      }
-      
-      function ori_sensor(ev){
-        oriflg = ev.absolute;
-        ar = ev.alpha || 0;
-        br = ev.beta || 0;
-        gr = ev.gamma || 0;
       }
       
       function acc_sensor(ev){
@@ -112,10 +83,6 @@
             ay = acc.y || 0;
             az = acc.z || 0;
           }
-          document.getElementById('angle_absolute').innerHTML=oriflg;
-          document.getElementById('alpha_angle').innerHTML=ar.toFixed(3);
-          document.getElementById('beta_angle').innerHTML=br.toFixed(3);
-          document.getElementById('gamma_angle').innerHTML=gr.toFixed(3);
           document.getElementById('acc_x').innerHTML=ax.toFixed(3);
           document.getElementById('acc_y').innerHTML=ay.toFixed(3);
           document.getElementById('acc_z').innerHTML=az.toFixed(3);
@@ -127,7 +94,8 @@
           if(theta_sign!=0)theta*=theta_sign;
           document.getElementById('angle_from_horizontal').innerHTML=theta.toFixed(3);
 
-          let w, x, y, x0, y0, x1, y1;
+          let w, x, y, x0, y0, x1, y1, flg;
+	  let radius = 10.5;
 	  let grad;
 	  if(ax){
 		  
@@ -149,6 +117,7 @@
 	    }
             if(x>cx){w=cx/x;x=cx;y*=w;}else if(x<-cx){w=-cx/x;x=-cx;y*=w;}
 	    if(y>cy){w=cy/y;x*=w;y=cy;}else if(y<-cy){w=-cy/y;x*=w;y=-cy;}
+	    if(x*x+y*y>radius)flg = 1;else flg = 0;
             x += cx;
 	    y += cy;
 	  
@@ -165,14 +134,13 @@
 	  }else{
 	      x = cx;
 	      y = cy;
-	      x0 = y0 = x1 = y1 = 0;
+	      x0 = y0 = x1 = y1 = flg = 0;
 	  }
 
-	  document.getElementById('debug').innerHTML=`${x.toFixed(3)} ${y.toFixed(3)} ${x0.toFixed(3)} ${y0.toFixed(3)} ${x1.toFixed(3)} ${y1.toFixed(3)} ${grad.toFixed(3)}`;
-	  level_draw(x,y,x0,y0,x1,y1);
+	  level_draw(x,y,x0,y0,x1,y1,flg);
         }
       }
-      function level_draw(x,y,x0,y0,x1,y1){
+      function level_draw(x,y,x0,y0,x1,y1,flg){
 	ctx.fillStyle = "#e6f64b";
         ctx.fillRect(0,0,canvas.width-1,canvas.height-1);
 
@@ -180,15 +148,15 @@
 	ctx.fillStyle = "#fafae6";
         ctx.beginPath();
 	ctx.setLineDash([]);
-        ctx.arc(x, y, 21, 0, Math.PI*2);
+        ctx.arc(x, y, radius, 0, Math.PI*2);
 	ctx.fill();
-	ctx.moveTo(x-10,y);
-	ctx.lineTo(x+10,y);
-	ctx.moveTo(x,y-10);
-	ctx.lineTo(x,y+10);
+	ctx.moveTo(x-radius+1,y);
+	ctx.lineTo(x+radius-1,y);
+	ctx.moveTo(x,y-radius+1);
+	ctx.lineTo(x,y+radius-1);
 	ctx.stroke();
 
-	if(x0||y0||x1||y1){
+	if(flg){
           ctx.strokeStyle = "#88aaff";
 	  ctx.beginPath();
 	　ctx.setLineDash([5, 5]);
