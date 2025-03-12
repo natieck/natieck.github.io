@@ -168,7 +168,12 @@
         ctx.strokeStyle = "#a8c343";
 	ctx.fillStyle = "#fafae6";
         ctx.beginPath();
+	ctx.setLineDash([]);
         ctx.arc(x, y, 21, 0, Math.PI*2);
+	ctx.moveTo(x-10,y);
+	ctx.lineTo(x+10,y);
+	ctx.moveTo(x,y-10);
+	ctx.lineTo(x,y+10);
 	ctx.stroke();
 	ctx.fill();
 
@@ -181,7 +186,7 @@
 	  ctx.stroke();
 	}
 	
-	ctx.fillStyle = 'red';
+	ctx.fillStyle = 'green';
         ctx.beginPath();
         ctx.arc(cx, cy, 5, 0, Math.PI*2);
 	ctx.fill();
