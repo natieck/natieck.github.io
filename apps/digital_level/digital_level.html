@@ -10,7 +10,7 @@
     <h1>Digital Level</h1>
     <button id="sensor_button" onclick="sensor_click(this);">start</button>
     &nbsp;&nbsp;<span id="counter"></span>
-    <div style="background: #aaa; border: 1px solid #222; border-radius: 15px; margin: 20px 20px; overflow: hidden;">
+    <div style="background: #aaa; border: 1px solid #222; border-radius: 15px; overflow: hidden;">
       <canvas id="level_canvas"></canvas>
     </div>
     <p>Euler angles (absolute:<span id="angle_absolute"></span>)<br />
@@ -147,8 +147,12 @@
             x += cx;
 	    y += cy;
 	  
-	    if(screen.orientation.angle == 90 || screen.orientation.angle == 270){
+	    if(screen.orientation.angle == 90){
 	      w=-(x-cx)+cx;x=y;y=w;
+	      w=x0;x0=-(y0-cy)+cy;y0=w;
+	      w=x1;x1=-(y1-cy)+cy;y1=w;
+	    }else if(screen.orientation.angle == 270){
+	      w=x;x=-y;y=w;
 	      w=x0;x0=-(y0-cy)+cy;y0=w;
 	      w=x1;x1=-(y1-cy)+cy;y1=w;
 	    }
