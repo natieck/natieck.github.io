@@ -22,6 +22,7 @@
       ay:<span id="acc_y"></span>,&nbsp;&nbsp;
       az:<span id="acc_z"></span>
     </p>
+    <span id="debug"></span>
     <script>
       let ar, br, gr, ax, ay, az;
       const degtorad = Math.PI/180, radtodeg = 180/Math.PI;
@@ -121,8 +122,8 @@
 
           let w, x, y, x0, y0, x1, y1;
 	  let grad;
-	  if(ax!=0)grad= ay/ax;
-	  if(grad!=undefined){
+	  if(ax!=0){
+	    grad= ay/ax;
 	    if(Math.abs(grad) < cy/cx){
 	      x = cx*theta/45;
 	      y = x*grad;
@@ -148,12 +149,14 @@
 	      w=x0;x0=-(y0-cy)+cy;y0=w;
 	      w=x1;x1=-(y1-cy)+cy;y1=w;
 	    }
+		  
 	  }else{
 	      x = cx;
 	      y = cy;
 	      x0 = y0 = x1 = y1 = 0;
 	  }
 
+	  document.getElementById('debug').innerHTML=`${x.toFixed(3)} ${y.toFixed(3)} ${x0.toFixed(3)} ${y0.toFixed(3)} ${x1.toFixed(3)} ${y1.toFixed(3)} ${grad.toFixed(3)}`;
 	  level_draw(x,y,x0,y0,x1,y1);
         }
       }
