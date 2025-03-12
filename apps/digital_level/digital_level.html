@@ -140,8 +140,8 @@
 	    }
             if(x>cx){w=x/cx;x=cx;y*=w;}else if(x<-cx){w=-x/cx;x=-cx;y*=w;}
 	    if(y>cy){w=y/cy;x*=w;y=cy;}else if(y<-cy){w=-y/cy;x*=w;y=-cy;}
-            x+=cx;
-	    y+=cy;
+            x += cx;
+	    y += cy;
 	  
 	    if(screen.orientation.angle == 90 || screen.orientation.angle == 270){
 	      w=-(x-cx)+cx;x=y;y=w;
@@ -149,7 +149,8 @@
 	      w=x1;x1=-(y1-cy)+cy;y1=w;
 	    }
 	  }else{
-	      x = y = 0;
+	      x = cx;
+	      y = cy;
 	  }
 
 	  level_draw(x,y,x0,y0,x1,y1);
@@ -166,14 +167,14 @@
 	ctx.stroke();
 	ctx.fill();
 
-	if(x||y){
+	if(x0||y0||x1||y1){
           ctx.strokeStyle = "#4444ff";
 	  ctx.beginPath();
 	　ctx.setLineDash([5, 5]);
 	  ctx.moveTo(x0,y0);
 	  ctx.lineTo(x1,y1);
 	  ctx.stroke();
-	}	
+	}
 	
 	ctx.fillStyle = 'red';
         ctx.beginPath();
