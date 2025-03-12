@@ -36,7 +36,7 @@
       canvas.height = cwidth;
       let cx = (canvas.width-1)/2, cy = (canvas.height-1)/2;
       let ctx = canvas.getContext('2d');
-      level_draw(0,0,0,0,0,0);
+      level_draw(cx,cy,0,0,0,0);
 
       function sensor_click(button){
         sensorflg = 1-sensorflg;
