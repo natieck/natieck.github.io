@@ -20,6 +20,7 @@
       ay:<span id="acc_y"></span>,&nbsp;&nbsp;
       az:<span id="acc_z"></span>
     </p>
+    <span id="screen_orientation"></span>
     <script>
       let ax, ay, az;
       const degtorad = Math.PI/180, radtodeg = 180/Math.PI;
@@ -86,6 +87,7 @@
           document.getElementById('acc_x').innerHTML=ax.toFixed(3);
           document.getElementById('acc_y').innerHTML=ay.toFixed(3);
           document.getElementById('acc_z').innerHTML=az.toFixed(3);
+	  document.getElementById('screen_orientation').innerHTML=screen.orientation.angle 
           let theta = Math.acos(az/Math.sqrt(ax*ax+ay*ay+az*az))*radtodeg;
 	  if(theta>90)theta = 180-theta;else if(theta<-90)theta = -(180+theta);
           let theta_sign;
